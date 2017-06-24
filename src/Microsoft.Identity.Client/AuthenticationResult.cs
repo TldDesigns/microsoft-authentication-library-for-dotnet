@@ -41,7 +41,7 @@ namespace Microsoft.Identity.Client
         private readonly AccessTokenCacheItem _accessTokenCacheItem;
 
         //Expose refresh token
-        private readonly RefreshTokenCacheItem _refreshTokenCacheItem;
+        private readonly string _refreshToken;
 
         internal AuthenticationResult()
         {
@@ -53,10 +53,10 @@ namespace Microsoft.Identity.Client
         }
 
         //Expose refresh token
-        internal AuthenticationResult(AccessTokenCacheItem accessTokenCacheItem, RefreshTokenCacheItem refreshTokenCacheItem)
+        internal AuthenticationResult(AccessTokenCacheItem accessTokenCacheItem, string refreshToken)
         {
             _accessTokenCacheItem = accessTokenCacheItem;
-            _refreshTokenCacheItem = refreshTokenCacheItem;
+            _refreshToken = refreshToken;
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Microsoft.Identity.Client
         /// <summary>
         /// Gets the Refesh Token requested.
         /// </summary>
-        public virtual string RefreshToken => _refreshTokenCacheItem?.RefreshToken;
+        public virtual string RefreshToken => _refreshToken;
 
         /// <summary>
         /// Gets the scope values returned from the service.

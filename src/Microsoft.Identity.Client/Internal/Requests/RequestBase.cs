@@ -46,7 +46,7 @@ namespace Microsoft.Identity.Client.Internal.Requests
         protected AccessTokenCacheItem AccessTokenItem;
 
         //Expose Refresh Token
-        protected RefreshTokenCacheItem RefreshTokenItem;
+        protected string RefreshToken;
 
         public ApiEvent.ApiIds ApiId { get; set; }
         public bool IsConfidentialClient { get; set; }
@@ -241,22 +241,32 @@ namespace Microsoft.Identity.Client.Internal.Requests
 
             //Expose Refresh Token
 
-            if (RefreshTokenItem == null)
+            if (RefreshToken == null)
             {
-                RefreshTokenItem = GetRefreshTokenFromResonse();
+                RefreshToken = GetRefreshTokenFromResonse();
             }
 
             //Expose Refresh Token
 
             //return new AuthenticationResult(AccessTokenItem);
-            return new AuthenticationResult(AccessTokenItem, RefreshTokenItem);
+            return new AuthenticationResult(AccessTokenItem, RefreshToken);
         }
 
         //Expose Refresh Token
-        private RefreshTokenCacheItem GetRefreshTokenFromResonse()
+        private string GetRefreshTokenFromResonse()
         {
-            return new RefreshTokenCacheItem(AuthenticationRequestParameters.TenantUpdatedCanonicalAuthority,
-                AuthenticationRequestParameters.ClientId, Response);
+            if (!string.IsNullOrWhiteSpace(Response.RefreshToken))
+            {
+                return Response.RefreshToken;
+            }
+            else
+            {
+                return null;
+            }
+
+
+            //return new RefreshTokenCacheItem(AuthenticationRequestParameters.TenantUpdatedCanonicalAuthority,
+            //    AuthenticationRequestParameters.ClientId, Response);
         }
 
         protected abstract void SetAdditionalRequestParameters(OAuth2Client client);
