@@ -18,6 +18,12 @@
     <!-- Workaround until Xamarin supports PPDB -->
     <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
     <DebugType>full</DebugType>
+    <PackageId>TLD.Microsoft.Identity.Client</PackageId>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RepositoryUrl>C:\Users\david\Documents\Visual Studio 2015\LocalNugetRepository</RepositoryUrl>
+    <Version>0.0.1</Version>
+    <AssemblyVersion>0.0.0.1</AssemblyVersion>
+    <FileVersion>0.0.0.1</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.1' ">
     <DefineConstants>$(DefineConstants);FACADE</DefineConstants>
