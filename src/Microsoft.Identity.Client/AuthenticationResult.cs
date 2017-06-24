@@ -40,6 +40,9 @@ namespace Microsoft.Identity.Client
         private const string Oauth2AuthorizationHeader = "Bearer ";
         private readonly AccessTokenCacheItem _accessTokenCacheItem;
 
+        //Expose refresh token
+        private readonly RefreshTokenCacheItem _refreshTokenCacheItem;
+
         internal AuthenticationResult()
         {
         }
@@ -47,6 +50,13 @@ namespace Microsoft.Identity.Client
         internal AuthenticationResult(AccessTokenCacheItem accessTokenCacheItem)
         {
             _accessTokenCacheItem = accessTokenCacheItem;
+        }
+
+        //Expose refresh token
+        internal AuthenticationResult(AccessTokenCacheItem accessTokenCacheItem, RefreshTokenCacheItem refreshTokenCacheItem)
+        {
+            _accessTokenCacheItem = accessTokenCacheItem;
+            _refreshTokenCacheItem = refreshTokenCacheItem;
         }
 
         /// <summary>
@@ -82,6 +92,12 @@ namespace Microsoft.Identity.Client
         /// Gets the entire Id Token if returned by the service or null if no Id Token is returned.
         /// </summary>
         public virtual string IdToken => _accessTokenCacheItem.RawIdToken;
+
+        //Expose Refresh Token
+        /// <summary>
+        /// Gets the Refesh Token requested.
+        /// </summary>
+        public virtual string RefreshToken => _refreshTokenCacheItem?.RefreshToken;
 
         /// <summary>
         /// Gets the scope values returned from the service.

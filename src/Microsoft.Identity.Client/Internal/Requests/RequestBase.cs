@@ -44,6 +44,10 @@ namespace Microsoft.Identity.Client.Internal.Requests
         internal readonly TokenCache TokenCache;
         protected TokenResponse Response;
         protected AccessTokenCacheItem AccessTokenItem;
+
+        //Expose Refresh Token
+        protected RefreshTokenCacheItem RefreshTokenItem;
+
         public ApiEvent.ApiIds ApiId { get; set; }
         public bool IsConfidentialClient { get; set; }
         protected virtual string GetUIBehaviorPromptValue()
@@ -235,7 +239,24 @@ namespace Microsoft.Identity.Client.Internal.Requests
                 AccessTokenItem = SaveTokenResponseToCache();
             }
 
-            return new AuthenticationResult(AccessTokenItem);
+            //Expose Refresh Token
+
+            if (RefreshTokenItem == null)
+            {
+                RefreshTokenItem = GetRefreshTokenFromResonse();
+            }
+
+            //Expose Refresh Token
+
+            //return new AuthenticationResult(AccessTokenItem);
+            return new AuthenticationResult(AccessTokenItem, RefreshTokenItem);
+        }
+
+        //Expose Refresh Token
+        private RefreshTokenCacheItem GetRefreshTokenFromResonse()
+        {
+            return new RefreshTokenCacheItem(AuthenticationRequestParameters.TenantUpdatedCanonicalAuthority,
+                AuthenticationRequestParameters.ClientId, Response);
         }
 
         protected abstract void SetAdditionalRequestParameters(OAuth2Client client);
